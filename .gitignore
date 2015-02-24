@@ -1,0 +1,18 @@
+# Logs
+logs
+*.log
+
+#Ignore our built files
+build/*
+test/*
+architecture.json
+
+# Ignore sensitive stuff
+creds.json
+/config/*
+!/config/default.json
+!/config/client.sample.json
+
+# Modules directory
+/node_modules/*
+/node_modules/*/

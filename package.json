@@ -1,0 +1,25 @@
+{
+  "name": "generator-vitreum",
+  "version": "0.0.1",
+  "description": "A Yeoman generator for the vitreum build system",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stolksdorf/generator-vitreum.git"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "Scott Tolksdorf",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/stolksdorf/generator-vitreum/issues"
+  },
+  "dependencies": {
+    "inquirer": "^0.8.0",
+    "lodash": "^3.3.1",
+    "yeoman-generator": "~0.18.7"
+  }
+}

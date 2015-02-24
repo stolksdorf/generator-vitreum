@@ -1,0 +1,12 @@
+{
+	"name": "<%= rawProjectName %>",
+	"description" : "<%= projectDescription %>",
+	"version": "0.0.0",
+	"scripts": {
+		"start": "node server.js",
+		"postinstall": "gulp prod"
+	},
+	"author": "",
+	"license": "BSD-2-Clause",
+	"dependencies": {}
+}
