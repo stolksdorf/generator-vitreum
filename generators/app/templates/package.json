@@ -1,5 +1,5 @@
 {
-	"name": "<%= rawProjectName %>",
+	"name": "<%= projectName %>",
 	"description" : "<%= projectDescription %>",
 	"version": "0.0.0",
 	"scripts": {

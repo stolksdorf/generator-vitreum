@@ -213,7 +213,7 @@ module.exports = generators.Base.extend({
 			this.log('Installing packages...');
 			this.npmInstall(['vitreum', 'lodash', 'react', 'express', 'gulp', 'node-jsx'], {save : true});
 			if(this.usePalette){
-				this.npmInstall(['git+ssh://git@github.com:thalmic/palette.git'], {save : true});
+				//this.npmInstall(['git+ssh://git@github.com:thalmic/palette.git'], {save : true});
 			}
 		}
 	},
