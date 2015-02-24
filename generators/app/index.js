@@ -86,17 +86,17 @@ module.exports = generators.Base.extend({
 			var done = this.async();
 			var base = [];
 			var optional = [];
-			_.each(cdnLibs, function(lib){
+			_.each(cdnLibs, function(lib, libName){
 				if(lib.base){
 					base.push({
-						value : lib.id,
-						name : lib.id,
+						value : libName,
+						name : libName,
 						checked : true
 					})
 				}else{
 					optional.push({
-						value : lib.id,
-						name : lib.id,
+						value : libName,
+						name : libName,
 						checked : false
 					})
 				}
@@ -107,8 +107,8 @@ module.exports = generators.Base.extend({
 				message: 'Which libraries would you like to include?',
 				choices: _.union(base, [new inquirer.Separator('---')], optional)
 			}, function(answers){
-				this.cdn = _.map(answers.cdn, function(libId){
-					return cdnLibs[libId];
+				this.cdn = _.map(answers.cdn, function(libName){
+					return cdnLibs[libName];
 				});
 				done();
 			}.bind(this));

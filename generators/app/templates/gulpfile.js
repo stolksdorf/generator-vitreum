@@ -19,7 +19,7 @@ var gulp = vitreum.tasks(gulp, {
 	serverWatchPaths: ["server"],
 	serverScript: "./server.js",
 	cdn: {
-		<% _.forEach(cdn, function(lib) { %><%- lib.id %> : ["<%- lib.inCode %>","<%= lib.tag %>"],
+		<% _.forEach(cdn, function(lib) { %>"<%- lib.id %>" : ["<%- lib.inCode %>","<%= lib.tag %>"],
 		<% }); %>
 	},
 	libs: [],

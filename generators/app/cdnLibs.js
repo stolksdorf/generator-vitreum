@@ -1,8 +1,8 @@
 module.exports = {
 	"react": {
-		id : "react",
+		id : "react/addons",
 		inCode : "window.React",
-		tag: "<script src='//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react-with-addons.js'></script>",
+		tag: "<script src='//cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.min.js'></script>",
 		base : true
 	},
 	"jquery": {
@@ -14,7 +14,7 @@ module.exports = {
 	"lodash": {
 		id : "lodash",
 		inCode : "window._",
-		tag: "<script src='//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js'></script>",
+		tag: "<script src='//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.3.0/lodash.min.js'></script>",
 		base : true
 	},
 
