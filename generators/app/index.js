@@ -124,51 +124,51 @@ module.exports = generators.Base.extend({
 		makeBaseComponent : function(){
 			this.fs.copyTpl(
 				this.templatePath('baseJsx.jsx'),
-				this.destinationPath('test/client/' + this.projectName + '/' + this.projectName + '.jsx'),
+				this.destinationPath('client/' + this.projectName + '/' + this.projectName + '.jsx'),
 				this
 			);
 			this.fs.copyTpl(
 				this.templatePath('baseLess.less'),
-				this.destinationPath('test/client/' + this.projectName + '/' + this.projectName + '.less'),
+				this.destinationPath('client/' + this.projectName + '/' + this.projectName + '.less'),
 				this
 			);
 		},
 		makeGulpFile : function(){
 			this.fs.copyTpl(
 				this.templatePath('gulpfile.js'),
-				this.destinationPath('test/gulpfile.js'),
+				this.destinationPath('gulpfile.js'),
 				this
 			);
 		},
 		makeGitignore : function(){
 			this.fs.copyTpl(
 				this.templatePath('gitignore'),
-				this.destinationPath('test/.gitignore'),
+				this.destinationPath('.gitignore'),
 				this
 			);
 		},
 		makeProjectModule : function(){
 			this.fs.copyTpl(
 				this.templatePath('dummy'),
-				this.destinationPath('test/node_modules/' + this.projectName + '/Project files go here'),
+				this.destinationPath('node_modules/' + this.projectName + '/Project files go here'),
 			this);
 		},
 		makeTemplate : function(){
 			this.fs.copyTpl(
 				this.templatePath('template.hbs'),
-				this.destinationPath('test/client/template.hbs'),
+				this.destinationPath('client/template.hbs'),
 			this);
 		},
 		makeReadMe : function(){
 			this.fs.copyTpl(
 				this.templatePath('readme.md'),
-				this.destinationPath('test/README.md'),
+				this.destinationPath('README.md'),
 			this);
 		},
 		makePackage : function(){
 			this.fs.copyTpl(
 				this.templatePath('package.json'),
-				this.destinationPath('test/package.json'),
+				this.destinationPath('package.json'),
 			this);
 		},
 		setupConfig : function(){
@@ -176,11 +176,11 @@ module.exports = generators.Base.extend({
 				this.npmInstall(['stockpiler'], {save : true});
 				this.fs.copyTpl(
 					this.templatePath('default.json'),
-					this.destinationPath('test/config/default.json'),
+					this.destinationPath('config/default.json'),
 				this);
 				this.fs.copyTpl(
 					this.templatePath('default.json'),
-					this.destinationPath('test/config/development.json'),
+					this.destinationPath('config/development.json'),
 				this);
 			}
 		},
@@ -196,13 +196,13 @@ module.exports = generators.Base.extend({
 
 			this.fs.copyTpl(
 				this.templatePath(serverType),
-				this.destinationPath('test/server.js'),
+				this.destinationPath('server.js'),
 			this);
 
 			//create server folder
 			this.fs.copyTpl(
 				this.templatePath('dummy'),
-				this.destinationPath('test/server/Server files go here'),
+				this.destinationPath('server/Server files go here'),
 			this);
 		},
 
