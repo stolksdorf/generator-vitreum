@@ -2,6 +2,6 @@
 	"dev": true,
 	"port": 8000,
 	"client": {
-		"dev": true,
+		"dev": true
 	}
 }
