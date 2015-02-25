@@ -8,7 +8,7 @@ var gulp = vitreum.tasks(gulp, {
 	entryPoints: ["./client/<%= projectName %>"],
 	DEV: true,
 
-	renderStatic : true,
+	projectType : "<%= projectType %>",
 
 	buildPath: "./build/",
 	pageTemplate: "./client/template.hbs",
