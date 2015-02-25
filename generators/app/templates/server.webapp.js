@@ -3,13 +3,22 @@ var vitreum = require('vitreum');
 var express = require("express");
 var app = express();
 app.use(express.static(__dirname + '/build'));
+require('node-jsx').install();
 <% if(useStockpiler){ %>
 var Config = require('stockpiler')({
 	envPrefix: "<%= PROJECTNAME %>"
 });
 <% } %>
 
-require('node-jsx').install();
+if(process.env.NODE_ENV == 'development'){
+	vitreum.cacheBusting([
+		'./client/**/*.jsx',
+		'./client/**/*.js',
+		'./node_modules/<%= projectName %>/**/*.jsx',
+		'./node_modules/<%= projectName %>/**/*.js'
+	])
+}
+
 
 app.get('/', function (req, res) {
 	vitreum.render({
