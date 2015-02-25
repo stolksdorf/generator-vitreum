@@ -3,7 +3,17 @@ var inquirer = require('inquirer');
 var _ = require('lodash');
 var cdnLibs = require('./cdnLibs.js');
 
+
+var TEST_MODE = false;
+
 module.exports = generators.Base.extend({
+
+	testing : function(){
+		if(TEST_MODE){
+			this.log('\n!!!YOU ARE IN TEST MODE!!!\n');
+			this.destinationRoot(this.destinationPath('test'))
+		}
+	},
 
 	prompting : {
 		projectName : function () {
@@ -49,8 +59,8 @@ module.exports = generators.Base.extend({
 						name : "Static - Creates a static HTML file for the server."
 					},
 					{
-						value : 'STAND_ALONE',
-						name : "Stand Alone - Creates a single HTML file. Doesn't need a server."
+						value : 'SERVER',
+						name : "Server - No client-side structure is needed. Back-end all day baby."
 					}
 				]
 			}, function (answer) {
@@ -59,6 +69,10 @@ module.exports = generators.Base.extend({
 			}.bind(this));
 		},
 		askForPalette : function(){
+			if(this.projectType === 'SERVER'){
+				this.usePalette = false;
+				return;
+			}
 			var done = this.async();
 			this.prompt([{
 				type: 'confirm',
@@ -83,6 +97,8 @@ module.exports = generators.Base.extend({
 			}.bind(this));
 		},
 		getCDN : function(){
+			if(this.projectType === 'SERVER') return;
+
 			var done = this.async();
 			var base = [];
 			var optional = [];
@@ -114,7 +130,6 @@ module.exports = generators.Base.extend({
 			}.bind(this));
 		}
 
-
 	},
 
 
@@ -122,6 +137,8 @@ module.exports = generators.Base.extend({
 
 	writing : {
 		makeBaseComponent : function(){
+			if(this.projectType === 'SERVER') return;
+
 			this.fs.copyTpl(
 				this.templatePath('baseJsx.jsx'),
 				this.destinationPath('client/' + this.projectName + '/' + this.projectName + '.jsx'),
@@ -134,8 +151,12 @@ module.exports = generators.Base.extend({
 			);
 		},
 		makeGulpFile : function(){
+			var targetFile = 'gulpfile.client.js';
+			if(this.projectType === 'SERVER'){
+				targetFile = 'gulpfile.server.js';
+			}
 			this.fs.copyTpl(
-				this.templatePath('gulpfile.js'),
+				this.templatePath(targetFile),
 				this.destinationPath('gulpfile.js'),
 				this
 			);
@@ -154,6 +175,8 @@ module.exports = generators.Base.extend({
 			this);
 		},
 		makeTemplate : function(){
+			if(this.projectType === 'SERVER') return;
+
 			this.fs.copyTpl(
 				this.templatePath('template.hbs'),
 				this.destinationPath('client/template.hbs'),
@@ -173,7 +196,7 @@ module.exports = generators.Base.extend({
 		},
 		setupConfig : function(){
 			if(this.useStockpiler){
-				this.npmInstall(['stockpiler'], {save : true});
+
 				this.fs.copyTpl(
 					this.templatePath('default.json'),
 					this.destinationPath('config/default.json'),
@@ -191,7 +214,7 @@ module.exports = generators.Base.extend({
 			}else if(this.projectType === 'STATIC'){
 				serverType = 'server.static.js';
 			}else{
-				serverType = 'server.standalone.js';
+				serverType = 'server.backend.js';
 			}
 
 			this.fs.copyTpl(
@@ -210,17 +233,26 @@ module.exports = generators.Base.extend({
 
 	install : {
 		installPackages : function(){
+			if(TEST_MODE) return;
+
 			this.log('Installing packages...');
-			this.npmInstall(['vitreum', 'lodash', 'react', 'express', 'gulp', 'node-jsx'], {save : true});
+			if(this.projectType === 'SERVER'){
+				this.npmInstall(['vitreum', 'lodash', 'express', 'gulp'], {save : true});
+			}else{
+				this.npmInstall(['vitreum', 'lodash', 'react', 'express', 'gulp', 'node-jsx'], {save : true});
+			}
 			if(this.usePalette){
-				//this.npmInstall(['git+ssh://git@github.com:thalmic/palette.git'], {save : true});
+				this.npmInstall(['git+ssh://git@github.com:thalmic/palette.git'], {save : true});
+			}
+			if(this.useStockpiler){
+				this.npmInstall(['stockpiler'], {save : true});
 			}
 		}
 	},
 
 	end : {
 		goodBye : function(){
-			this.log("All done! Happy Coding ༼ つ ◕_◕ ༽つ");
+			this.log("\n\n\nAll done! Happy Coding ༼ つ ◕_◕ ༽つ");
 		}
 	}
 });
