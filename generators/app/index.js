@@ -254,9 +254,6 @@ module.exports = generators.Base.extend({
 			}else{
 				this.npmInstall(['vitreum', 'lodash', 'react', 'express', 'gulp', 'node-jsx'], {save : true});
 			}
-			if(this.usePalette){
-				this.npmInstall(['git+ssh://git@github.com:thalmic/palette.git'], {save : true});
-			}
 			if(this.useStockpiler){
 				this.npmInstall(['stockpiler'], {save : true});
 			}

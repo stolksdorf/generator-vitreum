@@ -16,8 +16,8 @@ var gulp = vitreum.tasks(gulp, {
 	projectModules: ["./node_modules/<%= projectName %>", <% if(usePalette){ %> "./node_modules/palette" <% } %>],
 	assetExts: ["*.svg", "*.png", "*.jpg", "*.pdf", "*.eot", "*.ttf", "*.woff", "*.woff2"],
 
-	serverWatchPaths: ["server"],
-	serverScript: "./server.js",
+	serverWatchPaths: ["server", "server.js"],
+	serverScript: "server.js",
 	cdn: {
 		<% _.forEach(cdn, function(lib) { %>"<%- lib.id %>" : ["<%- lib.inCode %>","<%= lib.tag %>"],
 		<% }); %>

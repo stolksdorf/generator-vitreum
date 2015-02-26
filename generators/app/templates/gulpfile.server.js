@@ -7,8 +7,8 @@ var gulp    = require("gulp");
 var gulp = vitreum.tasks(gulp, {
 	DEV: true,
 
-	serverWatchPaths: ["server"],
-	serverScript: "./server.js",
+	serverWatchPaths: ["server", "server.js"],
+	serverScript: "server.js",
 
 	projectType : 'SERVER',
 
