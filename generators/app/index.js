@@ -4,7 +4,7 @@ var _ = require('lodash');
 var cdnLibs = require('./cdnLibs.js');
 
 
-var TEST_MODE = false;
+var TEST_MODE = true;
 
 module.exports = generators.Base.extend({
 
@@ -109,7 +109,7 @@ module.exports = generators.Base.extend({
 						name : libName,
 						checked : true
 					})
-				}else{
+				}else if(lib.base === false){
 					optional.push({
 						value : libName,
 						name : libName,
@@ -126,6 +126,12 @@ module.exports = generators.Base.extend({
 				this.cdn = _.map(answers.cdn, function(libName){
 					return cdnLibs[libName];
 				});
+
+				if(this.useStockpiler){
+					this.cdn.push(cdnLibs.stockpiler);
+				}
+
+
 				done();
 			}.bind(this));
 		}
@@ -205,6 +211,13 @@ module.exports = generators.Base.extend({
 					this.templatePath('default.json'),
 					this.destinationPath('config/development.json'),
 				this);
+
+				if(this.projectType === 'WEB_APP'){
+					this.fs.copyTpl(
+						this.templatePath('config.js'),
+						this.destinationPath('node_modules/' + this.projectName + '/config.js'),
+					this);
+				}
 			}
 		},
 		makeServer : function(){

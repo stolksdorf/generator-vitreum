@@ -18,6 +18,12 @@ module.exports = {
 		base : true
 	},
 
+	"stockpiler" : {
+		id : "stockpiler",
+		inCode : "function(){return{client : window.config}}",
+		tag : ""
+	},
+
 	"moment": {
 		id : "moment",
 		inCode : "window.moment",
