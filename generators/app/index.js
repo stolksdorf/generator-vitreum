@@ -4,7 +4,7 @@ var _ = require('lodash');
 var cdnLibs = require('./cdnLibs.js');
 
 
-var TEST_MODE = true;
+var TEST_MODE = false;
 
 module.exports = generators.Base.extend({
 
