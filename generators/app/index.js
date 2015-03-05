@@ -263,6 +263,10 @@ module.exports = generators.Base.extend({
 	end : {
 		goodBye : function(){
 			this.log("\n\n\nAll done! Happy Coding ༼ つ ◕_◕ ༽つ");
+			
+			if(this.usePalette){
+				this.log("\n\n\nrun : 'git submodule add git@github.com:thalmic/palette.git node_modules/palette'");
+			}
 		}
 	}
 });
