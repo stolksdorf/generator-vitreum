@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
-var React = require('react/addons');
+var React = require('react');
 var _ = require('lodash');
-var cx = React.addons.classSet;
 
 var <%= ComponentName %> = React.createClass({
 
