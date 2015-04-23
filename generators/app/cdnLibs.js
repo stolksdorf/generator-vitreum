@@ -1,6 +1,6 @@
 module.exports = {
 	"react": {
-		id : "react/addons",
+		id : "react",
 		inCode : "window.React",
 		tag: "<script src='//cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.min.js'></script>",
 		base : true
