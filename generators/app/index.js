@@ -84,6 +84,18 @@ module.exports = generators.Base.extend({
 				done();
 			}.bind(this));
 		},
+		askForPrism : function(){
+			var done = this.async();
+			this.prompt([{
+				type: 'confirm',
+				name: 'prism',
+				message: 'Would you like to use Prism?',
+				default: true
+			}], function (answer) {
+				this.usePrism = answer.prism
+				done();
+			}.bind(this));
+		},
 		askForStockpiler : function(){
 			var done = this.async();
 			this.prompt([{
@@ -266,6 +278,9 @@ module.exports = generators.Base.extend({
 			
 			if(this.usePalette){
 				this.log("\n\n\nrun : 'git submodule add git@github.com:thalmic/palette.git node_modules/palette'");
+			}
+			if(this.usePrism){
+				this.log("\nrun : 'git submodule add git@github.com:thalmic/prism.git node_modules/prism'");
 			}
 		}
 	}
