@@ -252,7 +252,7 @@ module.exports = generators.Base.extend({
 			if(this.projectType === 'SERVER'){
 				this.npmInstall(['vitreum', 'lodash', 'express', 'gulp'], {save : true});
 			}else{
-				this.npmInstall(['vitreum', 'lodash', 'react', 'express', 'gulp', 'node-jsx'], {save : true});
+				this.npmInstall(['vitreum', 'lodash', 'react@0.12.2', 'express', 'gulp', 'node-jsx'], {save : true});
 			}
 			if(this.useStockpiler){
 				this.npmInstall(['stockpiler'], {save : true});
