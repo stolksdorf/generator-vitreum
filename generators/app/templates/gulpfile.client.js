@@ -14,7 +14,7 @@ var gulp = vitreum.tasks(gulp, {
 	pageTemplate: "./client/template.hbs",
 
 	projectModules: ["./node_modules/<%= projectName %>", <% if(usePalette){ %> "./node_modules/palette" <% } %>],
-	assetExts: ["*.svg", "*.png", "*.jpg", "*.pdf", "*.eot", "*.ttf", "*.woff", "*.woff2"],
+	assetExts: ["*.svg", "*.png", "*.jpg", "*.pdf", "*.eot", "*.ttf", "*.woff", "*.woff2", "*.ico"],
 
 	serverWatchPaths: ["server", "server.js"],
 	serverScript: "server.js",
