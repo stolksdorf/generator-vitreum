@@ -1,3 +1,3 @@
-module.exports = require('stockpiler')({
+module.exports = require('browserify-stockpiler')({
 	envPrefix: "<%= PROJECTNAME %>"
 }).client;

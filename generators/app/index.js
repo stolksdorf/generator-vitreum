@@ -1,19 +1,10 @@
 var generators = require('yeoman-generator');
 var inquirer = require('inquirer');
 var _ = require('lodash');
-var cdnLibs = require('./cdnLibs.js');
+var libs = require('./libs.js');
 
-
-var TEST_MODE = false;
 
 module.exports = generators.Base.extend({
-
-	testing : function(){
-		if(TEST_MODE){
-			this.log('\n!!!YOU ARE IN TEST MODE!!!\n');
-			this.destinationRoot(this.destinationPath('test'))
-		}
-	},
 
 	prompting : {
 		projectName : function () {
@@ -43,120 +34,43 @@ module.exports = generators.Base.extend({
 				done();
 			}.bind(this));
 		},
-		projectType  : function(){
+		getLibs : function(){
 			var done = this.async();
-			this.prompt({
-				type    : 'list',
-				name    : 'projectType',
-				message : 'Your project type',
-				choices : [
-					{
-						value : 'WEB_APP',
-						name : "Web App - Creates template files for the server to use."
-					},
-					{
-						value : 'STATIC',
-						name : "Static - Creates a static HTML file for the server."
-					},
-					{
-						value : 'SERVER',
-						name : "Server - No client-side structure is needed. Back-end all day baby."
-					}
-				]
-			}, function (answer) {
-				this.projectType = answer.projectType;
-				done();
-			}.bind(this));
-		},
-		askForPalette : function(){
-			if(this.projectType === 'SERVER'){
-				this.usePalette = false;
-				return;
-			}
-			var done = this.async();
-			this.prompt([{
-				type: 'confirm',
-				name: 'palette',
-				message: 'Would you like to use Palette?',
-				default: true
-			}], function (answer) {
-				this.usePalette = answer.palette
-				done();
-			}.bind(this));
-		},
-		askForPrism : function(){
-			var done = this.async();
-			this.prompt([{
-				type: 'confirm',
-				name: 'prism',
-				message: 'Would you like to use Prism?',
-				default: true
-			}], function (answer) {
-				this.usePrism = answer.prism
-				done();
-			}.bind(this));
-		},
-		askForStockpiler : function(){
-			var done = this.async();
-			this.prompt([{
-				type: 'confirm',
-				name: 'stockpiler',
-				message: 'Would you like to use Stockpiler?',
-				default: true
-			}], function (answer) {
-				this.useStockpiler = answer.stockpiler
-				done();
-			}.bind(this));
-		},
-		getCDN : function(){
-			if(this.projectType === 'SERVER') return;
 
-			var done = this.async();
-			var base = [];
-			var optional = [];
-			_.each(cdnLibs, function(lib, libName){
-				if(lib.base){
-					base.push({
-						value : libName,
-						name : libName,
-						checked : true
-					})
-				}else if(lib.base === false){
-					optional.push({
-						value : libName,
-						name : libName,
-						checked : false
-					})
-				}
+			var libsSplit = _.partition(libs, function(lib){
+				return lib.checked
 			});
+
 			this.prompt({
 				type: 'checkbox',
-				name: 'cdn',
-				message: 'Which libraries would you like to include?',
-				choices: _.union(base, [new inquirer.Separator('---')], optional)
+				name: 'libs',
+				message: 'Which client libraries would you like to include?',
+				choices: _.union(libsSplit[0], [new inquirer.Separator('---')], libsSplit[1])
 			}, function(answers){
-				this.cdn = _.map(answers.cdn, function(libName){
-					return cdnLibs[libName];
-				});
+				this.libs = answers.libs;
 
-				if(this.useStockpiler){
-					this.cdn.push(cdnLibs.stockpiler);
-				}
-
+				console.log(this.libs);
 
 				done();
 			}.bind(this));
-		}
-
+		},
+		askForConfig : function(){
+			var done = this.async();
+			this.prompt([{
+				type: 'confirm',
+				name: 'config',
+				message: 'Would you like to setup configs, using stockpiler?',
+				default: true
+			}], function (answer) {
+				this.useConfig = answer.config
+				done();
+			}.bind(this));
+		},
 	},
-
-
 
 
 	writing : {
 		makeBaseComponent : function(){
-			if(this.projectType === 'SERVER') return;
-
 			this.fs.copyTpl(
 				this.templatePath('baseJsx.jsx'),
 				this.destinationPath('client/' + this.projectName + '/' + this.projectName + '.jsx'),
@@ -169,12 +83,8 @@ module.exports = generators.Base.extend({
 			);
 		},
 		makeGulpFile : function(){
-			var targetFile = 'gulpfile.client.js';
-			if(this.projectType === 'SERVER'){
-				targetFile = 'gulpfile.server.js';
-			}
 			this.fs.copyTpl(
-				this.templatePath(targetFile),
+				this.templatePath('gulpfile.js'),
 				this.destinationPath('gulpfile.js'),
 				this
 			);
@@ -189,15 +99,13 @@ module.exports = generators.Base.extend({
 		makeProjectModule : function(){
 			this.fs.copyTpl(
 				this.templatePath('dummy'),
-				this.destinationPath('node_modules/' + this.projectName + '/Project files go here'),
+				this.destinationPath('shared/' + this.projectName + '/Project files go here'),
 			this);
 		},
 		makeTemplate : function(){
-			if(this.projectType === 'SERVER') return;
-
 			this.fs.copyTpl(
-				this.templatePath('template.hbs'),
-				this.destinationPath('client/template.hbs'),
+				this.templatePath('template.dot'),
+				this.destinationPath('client/template.dot'),
 			this);
 		},
 		makeReadMe : function(){
@@ -213,8 +121,9 @@ module.exports = generators.Base.extend({
 			this);
 		},
 		setupConfig : function(){
-			if(this.useStockpiler){
+			if(!this.useConfig) return;
 
+			if(this.useStockpiler){
 				this.fs.copyTpl(
 					this.templatePath('default.json'),
 					this.destinationPath('config/default.json'),
@@ -224,26 +133,15 @@ module.exports = generators.Base.extend({
 					this.destinationPath('config/development.json'),
 				this);
 
-				if(this.projectType === 'WEB_APP'){
-					this.fs.copyTpl(
-						this.templatePath('config.js'),
-						this.destinationPath('node_modules/' + this.projectName + '/config.js'),
-					this);
-				}
+				this.fs.copyTpl(
+					this.templatePath('config.js'),
+					this.destinationPath('shared/' + this.projectName + '/config.js'),
+				this);
 			}
 		},
 		makeServer : function(){
-			var serverType;
-			if(this.projectType === 'WEB_APP'){
-				serverType = 'server.webapp.js';
-			}else if(this.projectType === 'STATIC'){
-				serverType = 'server.static.js';
-			}else{
-				serverType = 'server.backend.js';
-			}
-
 			this.fs.copyTpl(
-				this.templatePath(serverType),
+				this.templatePath('server.js'),
 				this.destinationPath('server.js'),
 			this);
 
@@ -258,16 +156,11 @@ module.exports = generators.Base.extend({
 
 	install : {
 		installPackages : function(){
-			if(TEST_MODE) return;
-
 			this.log('Installing packages...');
-			if(this.projectType === 'SERVER'){
-				this.npmInstall(['vitreum', 'lodash', 'express', 'gulp'], {save : true});
-			}else{
-				this.npmInstall(['vitreum', 'lodash', 'react@0.12.2', 'express', 'gulp', 'node-jsx@0.12.2'], {save : true});
-			}
-			if(this.useStockpiler){
-				this.npmInstall(['stockpiler'], {save : true});
+			this.npmInstall(['vitreum', 'lodash', 'express', 'gulp', 'react-dom'], {save : true});
+			this.npmInstall(this.libs, {save : true});
+			if(this.useConfig){
+				this.npmInstall(['browserify-stockpiler', 'stockpiler'], {save : true});
 			}
 		}
 	},
@@ -275,13 +168,6 @@ module.exports = generators.Base.extend({
 	end : {
 		goodBye : function(){
 			this.log("\n\n\nAll done! Happy Coding ༼ つ ◕_◕ ༽つ");
-			
-			if(this.usePalette){
-				this.log("\n\n\nrun : 'git submodule add git@github.com:thalmic/palette.git node_modules/palette'");
-			}
-			if(this.usePrism){
-				this.log("\nrun : 'git submodule add git@github.com:thalmic/prism.git node_modules/prism'");
-			}
 		}
 	}
 });

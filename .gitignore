@@ -16,3 +16,6 @@ creds.json
 # Modules directory
 /node_modules/*
 /node_modules/*/
+
+
+TEST

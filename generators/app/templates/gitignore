@@ -10,10 +10,4 @@ architecture.json
 /config/*
 !/config/default.json
 
-# Modules directory
-#/node_modules/*
-#/node_modules/*/
-#!/node_modules/<%= projectName %>/*
-
-# Ignore Vitreum cuz it's big
-/node_modules/vitreum/
+node_modules

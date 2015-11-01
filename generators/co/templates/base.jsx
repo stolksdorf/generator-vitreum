@@ -1,6 +1,6 @@
-/** @jsx React.DOM */
 var React = require('react');
 var _ = require('lodash');
+var cx = require('classnames');
 
 var <%= ComponentName %> = React.createClass({
 
@@ -8,7 +8,7 @@ var <%= ComponentName %> = React.createClass({
 		var self = this;
 		return(
 			<div className='<%= componentName %>'>
-				<%= componentName %> Ready!
+				<%= ComponentName %> Ready!
 			</div>
 		);
 	}

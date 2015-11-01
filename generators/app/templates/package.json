@@ -2,8 +2,8 @@
 	"name": "<%= projectName %>",
 	"description" : "<%= projectDescription %>",
 	"version": "0.0.0",
-	"scripts": {<% if(projectType !=='SERVER'){ %>
-		"postinstall": "gulp prod",<% } %>
+	"scripts":{
+		"postinstall": "gulp prod",
 		"start": "node server.js"
 	},
 	"author": "",

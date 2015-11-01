@@ -1,6 +1,6 @@
 {
   "name": "generator-vitreum",
-  "version": "0.1.11",
+  "version": "1.0.0",
   "description": "A Yeoman generator for the vitreum build system",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,8 +18,8 @@
     "url": "https://github.com/stolksdorf/generator-vitreum/issues"
   },
   "dependencies": {
-    "inquirer": "^0.8.0",
-    "lodash": "^3.3.1",
-    "yeoman-generator": "~0.18.7"
+    "inquirer": "^0.11.0",
+    "lodash": "^3.10.1",
+    "yeoman-generator": "^0.21.1"
   }
 }

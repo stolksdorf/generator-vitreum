@@ -1,6 +1,6 @@
 # generator-vitreum
 
-A Yeoman generator for the Vitreum build system
+A Yeoman generator for the [Vitreum build system](https://github.com/stolksdorf/vitreum)
 
 ## Start a Project
 

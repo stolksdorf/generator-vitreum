@@ -1,10 +1,6 @@
-/** @jsx React.DOM */
 var React = require('react');
 var _ = require('lodash');
-<% if(projectType === 'WEB_APP' && useStockpiler){ %>
-var Config = require('<%= projectName %>/config');
-<% } %>
-
+var cx = require('classnames');
 
 var <%= ProjectName %> = React.createClass({
 
