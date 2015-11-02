@@ -5,6 +5,11 @@ module.exports = [
 		checked : true
 	},
 	{
+		value : "react-dom",
+		name : "react-dom",
+		checked : true
+	},
+	{
 		value : "lodash",
 		name : "lodash",
 		checked : true

@@ -16,9 +16,6 @@ var gulp = vitreumTasks(gulp, {
 
 	serverWatchPaths: ["server"],
 	serverScript: "server.js",
-	cdn: {
-
-	},
 	libs: [
 		<% for(var i=0; i<libs.length; i++){ %>"<%- libs[i] %>",
 		<% }; %>

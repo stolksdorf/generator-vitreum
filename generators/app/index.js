@@ -157,7 +157,7 @@ module.exports = generators.Base.extend({
 	install : {
 		installPackages : function(){
 			this.log('Installing packages...');
-			this.npmInstall(['vitreum', 'lodash', 'express', 'gulp', 'react-dom'], {save : true});
+			this.npmInstall(['vitreum', 'express', 'gulp'], {save : true});
 			this.npmInstall(this.libs, {save : true});
 			if(this.useConfig){
 				this.npmInstall(['browserify-stockpiler', 'stockpiler'], {save : true});
